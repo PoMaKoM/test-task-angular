@@ -1,0 +1,58 @@
+<form class="container">
+    <!--    @if (!timerView) {-->
+    <!--        <button class="btn btn-primary" type="button" (click)="submitForm()">Submit all forms</button>-->
+    <!--    } @else {-->
+    <!--        <button class="btn btn-danger" type="button" (click)="cancelSubmit()">Cancel</button>-->
+    <!--        {{ timerView | date: "m:ss" }}-->
+    <!--    }-->
+    <div class="row text-center">
+        @for (userGroup of userListForm.controls; let index = $index; track index) {
+            <div class="col-4">
+                <div class="card m-3">
+                    <div class="m-3">
+                        <label for="country" class="form-label">Country</label>
+                        <input
+                                id="country"
+                                name="country"
+                                type="text"
+                                class="form-control"
+                                [formControl]="userGroup.controls.country"
+                        />
+                        <!--                                [ngbTypeahead]="search"-->
+                    </div>
+                    <div class="m-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="username"
+                                [formControl]="userGroup.controls.username"
+                        >
+                    </div>
+                    <div class="m-3">
+                        <label for="birthday" class="form-label">Birthday</label>
+                        <div class="input-group">
+                            <input
+                                #d="ngbDatepicker"
+                                ngbDatepicker
+                                id="birthday"
+                                name="birthday"
+                                class="form-control"
+                                placeholder="dd.mm.yyyy"
+                                [formControl]="userGroup.controls.birthday"
+                            />
+                            <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()"
+                                    type="button"></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        <div class="col-4">
+            <app-form-add
+                    (addNewFormEvent)="addForm()">
+            </app-form-add>
+        </div>
+    </div>
+</form>
