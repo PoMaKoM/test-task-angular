@@ -1,10 +1,12 @@
 <form class="container">
-    <!--    @if (!timerView) {-->
-    <!--        <button class="btn btn-primary" type="button" (click)="submitForm()">Submit all forms</button>-->
-    <!--    } @else {-->
-    <!--        <button class="btn btn-danger" type="button" (click)="cancelSubmit()">Cancel</button>-->
-    <!--        {{ timerView | date: "m:ss" }}-->
-    <!--    }-->
+    @if (!timerTime) {
+        <button class="btn btn-primary m-3" type="button" [disabled]="isUserListFormInvalid" (click)="onSubmit()">
+            Submit all forms
+        </button>
+    } @else {
+        <button class="btn btn-danger m-3" type="button" (click)="onCancel()">Cancel</button>
+        {{ timerTime | date: "m:ss" }}
+    }
     <div class="row text-center">
         @for (userGroup of userListForm.controls; let index = $index; track index) {
             <div class="col-4">
@@ -13,12 +15,12 @@
                         <label for="country" class="form-label">Country</label>
                         <input
                                 id="country"
-                                name="country"
                                 type="text"
                                 class="form-control"
+                                appInputValidation="Country"
                                 [formControl]="userGroup.controls.country"
+                                [ngbTypeahead]="searchCountry"
                         />
-                        <!--                                [ngbTypeahead]="search"-->
                     </div>
                     <div class="m-3">
                         <label for="username" class="form-label">Username</label>
@@ -26,6 +28,7 @@
                                 type="text"
                                 class="form-control"
                                 id="username"
+                                appInputValidation="Username"
                                 [formControl]="userGroup.controls.username"
                         >
                     </div>
@@ -36,8 +39,8 @@
                                 #d="ngbDatepicker"
                                 ngbDatepicker
                                 id="birthday"
-                                name="birthday"
                                 class="form-control"
+                                appInputValidation="Birthday"
                                 placeholder="dd.mm.yyyy"
                                 [formControl]="userGroup.controls.birthday"
                             />
@@ -46,13 +49,22 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         }
-        <div class="col-4">
-            <app-form-add
-                    (addNewFormEvent)="addForm()">
-            </app-form-add>
-        </div>
+        @if (isLessThanMaxFormsCount) {
+            <div class="col-4">
+                <button
+                        class="add-user card text-primary m-3 position-relative"
+                        type="button"
+                        [disabled]="isUserListFormDisabled"
+                        (click)="addUserGroup()">
+                    <figure class="align-middle figure border border-primary p-4 rounded-circle position-absolute top-50 start-50 translate-middle">
+                    <span class="position-absolute top-50 start-50 translate-middle">
+                        <i class="bi bi-plus fs-5"></i>
+                    </span>
+                    </figure>
+                </button>
+            </div>
+        }
     </div>
 </form>

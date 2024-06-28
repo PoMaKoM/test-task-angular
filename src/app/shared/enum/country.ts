@@ -1,9 +1,11 @@
-export enum Country {
-  Ukraine = 'Ukraine',
-  Poland = 'Poland',
-  Australia = 'Australia',
-  Austria = 'Austria',
-  Nepal = 'Nepal',
+export enum COUNTRY {
+  UKRAINE = 'Ukraine',
+  POLAND = 'Poland',
+  AUSTRALIA = 'Australia',
+  AUSTRIA = 'Austria',
+  NEPAL = 'Nepal',
   USA = 'USA',
-  Mexico = 'Mexico',
+  MEXICO = 'Mexico',
 }
+
+export const COUNTRIES_LIST: string[] = Object.values(COUNTRY);

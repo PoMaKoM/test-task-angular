@@ -1,0 +1,11 @@
+.add-user {
+  height: calc(100% - 2rem);
+  min-height: 300px;
+  width: calc(100% - 2rem);
+  background: rgb(181, 181, 181);
+  background: linear-gradient(90deg, rgb(210 210 210) 0%, rgb(248 248 248) 100%);
+
+  &:disabled {
+    background: linear-gradient(90deg, rgb(190, 190, 190) 0%, rgb(238, 238, 238) 100%);
+  }
+}

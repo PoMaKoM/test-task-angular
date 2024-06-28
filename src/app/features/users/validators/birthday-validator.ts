@@ -1,29 +1,17 @@
 import { Injectable } from '@angular/core';
-import { UserApiService } from '../services/user-api.service';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
 import { AbstractControl, ValidationErrors, Validator } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BirthdayValidator implements Validator {
-  constructor(private userApiService: UserApiService) {}
-
-  validate(control: AbstractControl): Observable<ValidationErrors | null> {
-    return control.valueChanges.pipe(
-      distinctUntilChanged(),
-      debounceTime(1000),
-      switchMap((value) => this.userApiService.getIsUsernameAvailable(value)),
-      map(({ isAvailable }) => (isAvailable ? null : { isAvailable: true })),
-      catchError(() => of(null)),
-    );
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (control.value) {
+      const { year, month, day } = control.value;
+      return new Date(year, month - 1, day) < new Date(Date.now())
+        ? null
+        : { isDateAfterCurrent: true };
+    }
+    return null;
   }
 }
